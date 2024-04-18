@@ -11,7 +11,7 @@ print(csvPath)
 columnsInterest = ['participant.code', ]
 raw_data = pd.read_csv(csvPath)
 
-column_names = ["sid","participant_code", "round_nb", "role", "dyad", "manip",
+column_names = ["sid","participant_code", "round_nb", "role","player", "dyad", "manipulation",
                  "trial_payoff", "responded", "sent_amount", "offer_response", "rt","prolific_id"]
 clean_data = pd.DataFrame(columns=column_names)
 
@@ -33,9 +33,9 @@ for subject in raw_data['participant.id_in_session']:
             'trial_payoff': subject_row[f'ultimatum_game.{round}.player.payoff'].values[0],
             'round_nb': subject_row[f'ultimatum_game.{round}.player.round_nb'].values[0],
             'role': subject_row[f'ultimatum_game.{round}.player.player_role'].values[0],
-            'is_dom': subject_row[f'ultimatum_game.{round}.player.is_dom'].values[0],
+            'player': subject_row['participant.id_in_session'].values[0],
             'dyad': subject_row[f'ultimatum_game.{round}.player.dyad'].values[0],
-            'manip': subject_row[f'ultimatum_game.{round}.player.is_dom'].values[0],
+            'manipulation': subject_row[f'ultimatum_game.{round}.player.is_dom'].values[0],
             'responded': subject_row[f'ultimatum_game.{round}.player.responded'].values[0],
             'sent_amount': subject_row[f'ultimatum_game.{round}.group.sent_amount'].values[0],
             'offer_response': subject_row[f'ultimatum_game.{round}.group.responder_accepted'].values[0],
