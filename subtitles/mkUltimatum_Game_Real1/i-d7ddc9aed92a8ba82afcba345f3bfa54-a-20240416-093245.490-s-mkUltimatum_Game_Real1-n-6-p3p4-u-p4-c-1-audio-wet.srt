@@ -1,0 +1,36 @@
+0
+0:00:00.250000-->0:00:07.260000
+ Hi. Hello. Hello, can you hear me?
+
+1
+0:00:08.900000-->0:00:11.900000
+ Okay, great. Have you been able to hear everyone?
+
+2
+0:00:13.850000-->0:00:18.490000
+ Not everyone, right? I think there's some communication problems.
+
+3
+0:00:18.490000-->0:00:20.490000
+ Anyway, I'm the proposer.
+
+4
+0:00:20.490000-->0:00:23.790000
+ Would you like to accept three coins?
+
+5
+0:00:24.390000-->0:00:28.880000
+ Really? How many do you want?
+
+6
+0:00:28.880000-->0:00:36.110000
+ But I did. Okay, I'll give you four.
+
+7
+0:00:36.110000-->0:00:42.360000
+ Does that sound good? Okay, great.
+
+8
+0:00:42.860000-->0:00:44.040000
+ Thank you.
+

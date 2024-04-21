@@ -1,0 +1,32 @@
+0
+0:00:00.200000-->0:00:00.520000
+ Hi.
+
+1
+0:00:05.050000-->0:00:07.010000
+ Hi, how are you doing today?
+
+2
+0:00:10.150000-->0:00:17.530000
+ Well, I saw the proposal for this interaction and I split the coins to four.
+
+3
+0:00:17.830000-->0:00:19.390000
+ Is that okay by you?
+
+4
+0:00:24.690000-->0:00:30.730000
+ Okay, so because of my previous interaction, I was given three, so it feels like I'm not lost.
+
+5
+0:00:35.750000-->0:00:38.090000
+ Oh, you gave me five. Okay, that's fine.
+
+6
+0:00:40.530000-->0:00:40.810000
+ Thank you.
+
+7
+0:00:42.450000-->0:00:43.810000
+ You're welcome.
+

@@ -1,0 +1,32 @@
+0
+0:00:03.840000-->0:00:04.300000
+ Hi there
+
+1
+0:00:12.390000-->0:00:17.550000
+ I'm not sure my 15 or something. Yeah
+
+2
+0:00:22.410000-->0:00:26.750000
+ Most people have been most people have been sending you know five
+
+3
+0:00:28.740000-->0:00:29.120000
+ Yeah
+
+4
+0:00:31.130000-->0:00:31.490000
+ you
+
+5
+0:00:32.800000-->0:00:38.520000
+ Know I'll reject it. So if you send me five, I'll accept it. If you send me less than five, I'll reject
+
+6
+0:00:38.520000-->0:00:40.920000
+ No, I'll reject five five or nothing
+
+7
+0:00:45.750000-->0:00:46.090000
+ Okay
+

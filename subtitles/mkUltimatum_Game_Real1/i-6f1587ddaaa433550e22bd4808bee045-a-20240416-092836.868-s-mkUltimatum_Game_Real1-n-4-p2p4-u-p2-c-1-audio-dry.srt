@@ -1,0 +1,16 @@
+0
+0:00:01.200000-->0:00:11.390000
+ Hello. Hi. When I've been Responder I've been getting between one and three coins, what have you been getting?
+
+1
+0:00:11.390000-->0:00:25.420000
+ Yeah. You would like more than three? What would you like?
+
+2
+0:00:25.420000-->0:00:31.450000
+ Hmm. I'll go four.
+
+3
+0:00:31.450000-->0:00:35.400000
+ Alright. Okay.
+

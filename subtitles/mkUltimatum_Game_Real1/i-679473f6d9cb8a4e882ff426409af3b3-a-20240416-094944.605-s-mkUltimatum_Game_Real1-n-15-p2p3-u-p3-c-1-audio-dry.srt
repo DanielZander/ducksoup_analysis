@@ -1,0 +1,20 @@
+0
+0:00:03.280000-->0:00:10.330000
+ Hello! No, I wouldn't go as low as 3.
+
+1
+0:00:15.800000-->0:00:19.600000
+ Have you been having a few good rounds so far?
+
+2
+0:00:24.850000-->0:00:25.570000
+ Oh, really?
+
+3
+0:00:33.300000-->0:00:35.840000
+ Yeah, go on, I'll take 4.
+
+4
+0:00:37.200000-->0:00:39.500000
+ Alright, cool. Nice one.
+

@@ -1,0 +1,16 @@
+0
+0:00:00.300000-->0:00:05.550000
+ Hello? Hello? Hello, can you hear me?
+
+1
+0:00:09.200000-->0:00:12.680000
+ So you're the proposer, right?
+
+2
+0:00:16.550000-->0:00:21.980000
+ Yeah, that would be okay. I've been getting less in the previous round as responders, so 5-5 works.
+
+3
+0:00:23.750000-->0:00:26.530000
+ Okay, thank you. Cheers.
+

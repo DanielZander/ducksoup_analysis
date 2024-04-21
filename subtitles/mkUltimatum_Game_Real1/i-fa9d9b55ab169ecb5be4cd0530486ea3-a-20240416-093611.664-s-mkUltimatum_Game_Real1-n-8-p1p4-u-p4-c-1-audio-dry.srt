@@ -1,0 +1,20 @@
+0
+0:00:01.500000-->0:00:16.590000
+ Hello? Hi there. Can you tell me how many coins you have in total? 15? Okay.
+
+1
+0:00:16.590000-->0:00:20.930000
+ And how many... Have you been getting a lot of points as a proposer?
+
+2
+0:00:22.670000-->0:00:23.570000
+ As a repositor.
+
+3
+0:00:26.850000-->0:00:31.700000
+ Five? Okay, I was sent a bit less. So would you be okay with three?
+
+4
+0:00:36.350000-->0:00:44.940000
+ Four. Four. Oh, man. I didn't get that before. I have less coins than you.
+

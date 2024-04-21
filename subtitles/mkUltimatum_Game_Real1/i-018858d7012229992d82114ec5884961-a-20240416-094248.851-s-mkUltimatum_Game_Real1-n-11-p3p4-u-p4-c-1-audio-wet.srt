@@ -1,0 +1,28 @@
+0
+0:00:00-->0:00:04.680000
+ Hello, can you hear me?
+
+1
+0:00:05.380000-->0:00:05.800000
+ Hello.
+
+2
+0:00:17.100000-->0:00:21.070000
+ A I would accept I would gladly accept 5.
+
+3
+0:00:31.800000-->0:00:37.790000
+ Yeah. OK, OK, OK, OK, I'll accept 4,
+
+4
+0:00:37.790000-->0:00:38.750000
+ but just this time.
+
+5
+0:00:39.150000-->0:00:42.150000
+ Do you know if you know if we are talking again?
+
+6
+0:00:42.150000-->0:00:43.310000
+ I'm not sure.
+

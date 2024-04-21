@@ -1,0 +1,16 @@
+0
+0:00:06.100000-->0:00:07.100000
+ Hi, I can hear you.
+
+1
+0:00:20.080000-->0:00:24
+ No, five, five. I think five. I gave you five. So five is okay.
+
+2
+0:00:26.700000-->0:00:30.900000
+ Right now, in total, 42.
+
+3
+0:00:36.770000-->0:00:38.670000
+ All right. Thank you.
+

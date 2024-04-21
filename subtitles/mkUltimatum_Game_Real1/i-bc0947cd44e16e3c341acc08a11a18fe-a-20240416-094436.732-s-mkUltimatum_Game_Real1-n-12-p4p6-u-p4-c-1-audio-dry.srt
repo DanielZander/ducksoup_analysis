@@ -1,0 +1,32 @@
+0
+0:00:00.500000-->0:00:06.600000
+ Hello? Hello? Hello, can you hear me?
+
+1
+0:00:08.300000-->0:00:11.260000
+ Okay, great. So I'm the proposer in this round.
+
+2
+0:00:12.250000-->0:00:14.970000
+ So I will give you one coin.
+
+3
+0:00:15.250000-->0:00:28.550000
+ Three? Four? Okay.
+
+4
+0:00:29.610000-->0:00:30.830000
+ Okay, four then.
+
+5
+0:00:33.950000-->0:00:35.600000
+ How many points do you have?
+
+6
+0:00:35.700000-->0:00:41.150000
+ Oh, wow. I also have 35.
+
+7
+0:00:43-->0:00:45.710000
+ Okay, so I'll have...
+
