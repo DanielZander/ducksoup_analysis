@@ -17,7 +17,7 @@ df$other_manip = ifelse(df$manipulation == "dom", "sub", "dom") #Manipulation of
 
 ################################################################################
 ##########################DESCRIPTIVE STATS AND PLOTTING########################
-################################################################################
+#################################################################################
 #acceptance rate and stuff
 1-mean(df$unfair, na.rm = TRUE) #37.9% of offers were unfair, i.e. <5 coins. 
 
@@ -154,8 +154,6 @@ aggregate(rt ~ other_manip, resp_df, mean)
 #1         dom          6255.813
 #2         sub          5202.975
 
-x = lm(rt ~ other_manip, resp_df)
-summary(x)
 
 
 
