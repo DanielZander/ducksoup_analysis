@@ -3,6 +3,7 @@ Preprocessing script of behavioral data for the ultimatum game
 """
 import pandas as pd
 import os
+from statistics import mean
 
 # %%
 currentDir = os.getcwd()
@@ -15,7 +16,10 @@ column_names = ["sid","participant_code", "round_nb", "role","player", "dyad", "
                  "trial_payoff", "responded", "sent_amount", "offer_response", "rt","prolific_id"]
 clean_data = pd.DataFrame(columns=column_names)
 
-
+column_debrief = ["sid", "participant_code", "player", "prolific_id", "mean_social_dominance", "mean_aggresive_dominance", 
+                  "sound_quality", "sound_comment", "fidelity", "fidelity_comment", "xp_goal", "enough_time", "manipulation",
+                  'detection_degree', "manipulation_comment", "unique_interactions"]
+clean_data_debrief = pd.DataFrame(columns=column_debrief)
 
 # %%
 for subject in raw_data['participant.id_in_session']:
@@ -46,10 +50,35 @@ for subject in raw_data['participant.id_in_session']:
         
         clean_data = pd.concat([clean_data, pd.DataFrame([row_data])], ignore_index=True)
         
+
+    row_data_debrief = {
+        'participant_code': subject_row['participant.code'].values[0],
+        'prolific_id': subject_row['ultimatum_game.20.player.prolific_id'].values[0],
+        'sid': subject_row['session.config.name'].values[0],
+        'player': subject_row['participant.id_in_session'].values[0],
+        'mean_social_dominance': mean([float(subject_row[f'ultimatum_game.20.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
+        'mean_aggresive_dominance': mean([float(subject_row[f'ultimatum_game.20.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
+        'sound_quality': subject_row['ultimatum_game.20.player.final_quality'].values[0],
+        'sound_comment': subject_row['ultimatum_game.20.player.final_quality_comment'].values[0],
+        'fidelity':  subject_row['ultimatum_game.20.player.final_conversation_fidelity'].values[0],
+        'fidelity_comment': subject_row['ultimatum_game.20.player.final_conversation_fidelity_comment'].values[0],
+        'xp_goal': subject_row['ultimatum_game.20.player.final_xp_goal'].values[0],
+        'enough_time': subject_row['ultimatum_game.20.player.enough_time'].values[0],
+        'manipulation': subject_row['ultimatum_game.20.player.manip_yes_no'].values[0],
+        'detection_degree': subject_row['ultimatum_game.20.player.detection_degree'].values[0],
+        'manipulation_comment': subject_row['ultimatum_game.20.player.final_manipulation_comment'].values[0],
+        'unique_interactions': subject_row['ultimatum_game.20.player.unique_interactions'].values[0]
         
+        
+        }
+        
+    clean_data_debrief = pd.concat([clean_data_debrief, pd.DataFrame([row_data_debrief])], ignore_index=True)
         
         
 # %%
 
 clean_data.to_csv('data\clean_data.csv', index=False)
+clean_data_debrief.to_csv('data\clean_data_debrief.csv', index=False)
+
+
           

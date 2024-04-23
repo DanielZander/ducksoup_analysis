@@ -17,7 +17,7 @@ df$other_manip = ifelse(df$manipulation == "dom", "sub", "dom") #Manipulation of
 
 ################################################################################
 ##########################DESCRIPTIVE STATS AND PLOTTING########################
-#################################################################################
+################################################################################
 #acceptance rate and stuff
 1-mean(df$unfair, na.rm = TRUE) #37.9% of offers were unfair, i.e. <5 coins. 
 
@@ -154,10 +154,14 @@ aggregate(rt ~ other_manip, resp_df, mean)
 #1         dom          6255.813
 #2         sub          5202.975
 
+################################################################################
+##########################DEBRIEF INFO##########################################
+################################################################################
+df_debrief = read_csv("clean_data_debrief.csv ")
 
-
-
-
+idx = match(df$participant_code, df_debrief$participant_code)
+df["social_dominance"] = df_debrief[ idx, "mean_social_dominance"]
+df["aggressive_dominance"] = df_debrief[ idx, "mean_aggresive_dominance"]
 
 
 
