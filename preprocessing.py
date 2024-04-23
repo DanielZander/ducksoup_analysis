@@ -6,7 +6,7 @@ import os
 
 # %%
 currentDir = os.getcwd()
-csvPath = os.path.join(currentDir, 'data.csv')
+csvPath = os.path.join(currentDir, 'data\data.csv')
 print(csvPath)
 columnsInterest = ['participant.code', ]
 raw_data = pd.read_csv(csvPath)
@@ -14,6 +14,8 @@ raw_data = pd.read_csv(csvPath)
 column_names = ["sid","participant_code", "round_nb", "role","player", "dyad", "manipulation",
                  "trial_payoff", "responded", "sent_amount", "offer_response", "rt","prolific_id"]
 clean_data = pd.DataFrame(columns=column_names)
+
+
 
 # %%
 for subject in raw_data['participant.id_in_session']:
@@ -44,7 +46,10 @@ for subject in raw_data['participant.id_in_session']:
         
         clean_data = pd.concat([clean_data, pd.DataFrame([row_data])], ignore_index=True)
         
+        
+        
+        
 # %%
 
-clean_data.to_csv('clean_data.csv', index=False)
+clean_data.to_csv('data\clean_data.csv', index=False)
           
