@@ -129,17 +129,23 @@ means <- df %>%
 sd <- df %>%
   group_by(manipulation, role) %>%
   summarise(sd_trial_payoff = sd(trial_payoff))
+plot2_df = data.frame(trial_payoff_mean = means, trial_payoff_sd = sd)
+plot2_df = plot2_df[, -c(4,5)]
+colnames(plot2_df) = c("manipulation", "role", "mean", "sd")
 # Plot
-ggplot(data = means, aes(x = manipulation, y = mean_trial_payoff, fill = role)) +
+ggplot(data = plot2_df, aes(x = manipulation, y = mean, fill = role)) +
   geom_col(position = position_dodge(width = .5), color = "black") +
+  geom_errorbar(aes(ymin = mean  - sd, ymax = mean+sd), width = .5,color = "black", position = position_dodge2(.1), linetype = 2)+
   labs(x = "Manipulation", y = "Mean trial_payoff") +
   theme_bw()+
   scale_y_continuous(limits = c(0, 5))+
   geom_hline(yintercept = mean(df$trial_payoff), color = "red", linetype = 2, size = 1.2)+
-  scale_fill_manual(values = c("darkgreen", "darkolivegreen1"))
+  scale_fill_manual(values = c("darkgreen", "darkolivegreen1"))+
+  scale_y_continuous(limits = c(0, 7.5))
+  
+  
 
-
-#Reaction time 
+#Reaction time 2
 mean(df$rt, na.rm = TRUE) #6140ms 
 sd(df$rt, na.rm = TRUE) #5275ms
 subset_df <- subset(df, rt <= 30000)
