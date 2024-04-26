@@ -7,13 +7,13 @@ from statistics import mean
 
 # %%
 currentDir = os.getcwd()
-csvPath = os.path.join(currentDir, 'data\data.csv')
+csvPath = os.path.join(currentDir, 'raw_data\data.csv')
 print(csvPath)
 columnsInterest = ['participant.code', ]
 raw_data = pd.read_csv(csvPath)
 
 column_names = ["sid","participant_code", "round_nb", "role","player", "dyad", "manipulation",
-                 "trial_payoff", "responded", "sent_amount", "offer_response", "rt","prolific_id"]
+                 "trial_payoff", "responded", "sent_amount", "offer_response", "rt","prolific_id","mean_social_dominance","mean_aggresive_dominance"]
 clean_data = pd.DataFrame(columns=column_names)
 
 column_debrief = ["sid", "participant_code", "player", "prolific_id", "mean_social_dominance", "mean_aggresive_dominance", 
@@ -45,8 +45,11 @@ for subject in raw_data['participant.id_in_session']:
             'responded': subject_row[f'ultimatum_game.{round}.player.responded'].values[0],
             'sent_amount': subject_row[f'ultimatum_game.{round}.group.sent_amount'].values[0],
             'offer_response': subject_row[f'ultimatum_game.{round}.group.responder_accepted'].values[0],
-            'rt': rt
+            'rt': rt,
+            'mean_social_dominance': mean([float(subject_row[f'ultimatum_game.20.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
+            'mean_aggresive_dominance': mean([float(subject_row[f'ultimatum_game.20.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)])
             }   
+        
         
         clean_data = pd.concat([clean_data, pd.DataFrame([row_data])], ignore_index=True)
         
@@ -77,8 +80,8 @@ for subject in raw_data['participant.id_in_session']:
         
 # %%
 
-clean_data.to_csv('data\clean_data.csv', index=False)
-clean_data_debrief.to_csv('data\clean_data_debrief.csv', index=False)
+clean_data.to_csv('raw_data\clean_data.csv', index=False)
+clean_data_debrief.to_csv('raw_data\clean_data_debrief.csv', index=False)
 
 
           

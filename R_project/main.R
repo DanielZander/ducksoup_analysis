@@ -45,7 +45,7 @@ aggregate(offer_response ~ unfair + other_manip, resp_df ,mean)
 #     unfair    other_manip    offer_response
 #1      0           dom         0.8181818
 #2      1           dom         1.0000000
-#3      0            sub        0.8000000
+#3      0           sub         0.8000000
 #4      1           sub         1.0000000
 
 # 1 = fair, 0 = unfair.
@@ -121,19 +121,21 @@ aggregate(trial_payoff ~ manipulation + role, df , mean)
 #4          sub        responder      4.033333
 
 
+aggregate(trial_payoff ~ manipulation + role, df , sum)
+
 # Calculate mean of trial_payoff grouped by manipulation and role
 means <- df %>%
-  group_by(manipulation, role) %>%
+  group_by(manipulation, role, player) %>%
   summarise(mean_trial_payoff = mean(trial_payoff))
 
-sd <- df %>%
+sd <- means %>%
   group_by(manipulation, role) %>%
-  summarise(sd_trial_payoff = sd(trial_payoff))
+  summarise(sd_trial_payoff = sd(mean_trial_payoff))
 plot2_df = data.frame(trial_payoff_mean = means, trial_payoff_sd = sd)
 plot2_df = plot2_df[, -c(4,5)]
 colnames(plot2_df) = c("manipulation", "role", "mean", "sd")
 # Plot
-ggplot(data = plot2_df, aes(x = manipulation, y = mean, fill = role)) +
+ggplot(data = plot2_df, aes(x = role, y = mean, fill = manipulation)) +
   geom_col(position = position_dodge(width = .5), color = "black") +
   geom_errorbar(aes(ymin = mean  - sd, ymax = mean+sd), width = .5,color = "black", position = position_dodge2(.1), linetype = 2)+
   labs(x = "Manipulation", y = "Mean trial_payoff") +
@@ -144,6 +146,13 @@ ggplot(data = plot2_df, aes(x = manipulation, y = mean, fill = role)) +
   scale_y_continuous(limits = c(0, 7.5))
   
   
+aggregate(trial_payoff ~ manipulation + role, df , sum)
+#manipulation      role trial_payoff
+#1          dom  proposer          139
+#2          sub  proposer          132
+#3          dom responder          118
+#4          sub responder          121
+
 
 #Reaction time 2
 mean(df$rt, na.rm = TRUE) #6140ms 
