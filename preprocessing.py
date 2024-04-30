@@ -12,11 +12,11 @@ print(csvPath)
 columnsInterest = ['participant.code', ]
 raw_data = pd.read_csv(csvPath)
 
-column_names = ["sid","participant_code", "round_nb", "role","player", "dyad", "manipulation",
-                 "trial_payoff", "responded", "sent_amount", "offer_response", "rt","prolific_id","mean_social_dominance","mean_aggresive_dominance"]
+column_names = ["sid","session_code", "mk_session","prolific_id","participant_code", "round_nb", "role","player", "dyad", "manipulation",
+                 "trial_payoff", "responded", "sent_amount", "offer_response", "rt","mean_social_dominance","mean_aggresive_dominance"]
 clean_data = pd.DataFrame(columns=column_names)
 
-column_debrief = ["sid", "participant_code", "player", "prolific_id", "mean_social_dominance", "mean_aggresive_dominance", 
+column_debrief = ["sid","session_code", "mk_session", "prolific_id", "participant_code", "player", "mean_social_dominance", "mean_aggresive_dominance", 
                   "sound_quality", "sound_comment", "fidelity", "fidelity_comment", "xp_goal", "enough_time", "manipulation",
                   'detection_degree', "manipulation_comment", "unique_interactions"]
 clean_data_debrief = pd.DataFrame(columns=column_debrief)
@@ -34,8 +34,10 @@ for subject in raw_data['participant.id_in_session']:
             
         row_data = {
             'participant_code': subject_row['participant.code'].values[0],
+            'session_code': subject_row['session.conde'].values[0],
             'prolific_id': subject_row['ultimatum_game.20.player.prolific_id'].values[0],
             'sid': subject_row['session.config.name'].values[0],
+            'mk_session': subject_row['session.config.id'].values[0],
             'trial_payoff': subject_row[f'ultimatum_game.{round}.player.payoff'].values[0],
             'round_nb': subject_row[f'ultimatum_game.{round}.player.round_nb'].values[0],
             'role': subject_row[f'ultimatum_game.{round}.player.player_role'].values[0],
@@ -56,8 +58,10 @@ for subject in raw_data['participant.id_in_session']:
 
     row_data_debrief = {
         'participant_code': subject_row['participant.code'].values[0],
+        'session_code': subject_row['session.conde'].values[0],
         'prolific_id': subject_row['ultimatum_game.20.player.prolific_id'].values[0],
         'sid': subject_row['session.config.name'].values[0],
+        'mk_session': subject_row['session.config.id'].values[0],
         'player': subject_row['participant.id_in_session'].values[0],
         'mean_social_dominance': mean([float(subject_row[f'ultimatum_game.20.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
         'mean_aggresive_dominance': mean([float(subject_row[f'ultimatum_game.20.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
