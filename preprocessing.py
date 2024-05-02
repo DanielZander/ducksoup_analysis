@@ -82,12 +82,24 @@ for subject in raw_data['participant.id_in_session']:
         }
         
     clean_data_debrief = pd.concat([clean_data_debrief, pd.DataFrame([row_data_debrief])], ignore_index=True)
-        
-        
-# %%
 
 clean_data.to_csv(f'clean_data\clean_{data_name}.csv', index=False)
 clean_data_debrief.to_csv(f'clean_data\clean_{data_name}_debrief.csv', index=False)
 
+# %% COMBINE CLEAN DATA
+df1 = pd.read_csv('clean_data\clean_data_mk1_i5pyilec.csv')
+df2 = pd.read_csv('clean_data\clean_data_mk2_dzoz67y9.csv')
+df3 = pd.read_csv('clean_data\clean_data_mk3_mklqs5l0.csv')
+df4 = pd.read_csv('clean_data\clean_data_mk4_080ps8pg.csv')
 
+df1_deb = pd.read_csv('clean_data\clean_data_mk1_i5pyilec_debrief.csv')
+df2_deb = pd.read_csv('clean_data\clean_data_mk2_dzoz67y9_debrief.csv')
+df3_deb = pd.read_csv('clean_data\clean_data_mk3_mklqs5l0_debrief.csv')
+df4_deb = pd.read_csv('clean_data\clean_data_mk4_080ps8pg_debrief.csv')
+
+combined_df = pd.concat([df1, df2, df3, df4])
+combined_df_debrief = pd.concat([df1_deb, df2_deb, df3_deb, df4_deb])
+
+combined_df.to_csv('clean_data\combined_data\combined_data.csv', index=False)
+combined_df_debrief.to_csv('clean_data\combined_data\combined_data_debrief.csv', index=False)
           
