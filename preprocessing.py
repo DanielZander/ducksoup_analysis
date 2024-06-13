@@ -6,7 +6,7 @@ import os
 from statistics import mean
 
 # %%
-data_name = "data_mk4_080ps8pg"
+data_name = "data_p4;2_pl6dy4ai"
 
 currentDir = os.getcwd()
 csvPath = os.path.join(currentDir, f'raw_data\{data_name}.csv')
@@ -19,7 +19,7 @@ clean_data = pd.DataFrame(columns=column_names)
 
 column_debrief = ["sid","session_code", "mk_session", "prolific_id", "participant_code", "player", "mean_social_dominance", "mean_aggresive_dominance", 
                   "sound_quality", "sound_comment", "fidelity", "fidelity_comment", "xp_goal", "enough_time", "manipulation",
-                  'detection_degree', "manipulation_comment", "unique_interactions"]
+                  'detection_degree', "manipulation_comment", "unique_interactions", "xp_feedback"]
 clean_data_debrief = pd.DataFrame(columns=column_debrief)
 
 # %%
@@ -40,7 +40,7 @@ for subject in raw_data['participant.id_in_session']:
             'prolific_id': subject_row['ultimatum_game.20.player.prolific_id'].values[0],
             'sid': subject_row['session.config.name'].values[0],
             'mk_session': subject_row['session.config.id'].values[0],
-            'trial_payoff': subject_row[f'ultimatum_game.{round}.player.payoff'].values[0],
+            'trial_payoff': subject_row[f'ultimatum_game.{round}.player.trial_payoff'].values[0],
             'round_nb': subject_row[f'ultimatum_game.{round}.player.round_nb'].values[0],  
             'role': subject_row[f'ultimatum_game.{round}.player.player_role'].values[0],
             'player': subject_row['participant.id_in_session'].values[0],
@@ -76,7 +76,8 @@ for subject in raw_data['participant.id_in_session']:
         'manipulation': subject_row['ultimatum_game.20.player.manip_yes_no'].values[0],
         'detection_degree': subject_row['ultimatum_game.20.player.detection_degree'].values[0],
         'manipulation_comment': subject_row['ultimatum_game.20.player.final_manipulation_comment'].values[0],
-        'unique_interactions': subject_row['ultimatum_game.20.player.unique_interactions'].values[0]
+        'unique_interactions': subject_row['ultimatum_game.20.player.unique_interactions'].values[0],
+        'xp_feedback':  subject_row['ultimatum_game.20.player.game_feedback'].values[0],
         
         
         }
@@ -86,7 +87,14 @@ for subject in raw_data['participant.id_in_session']:
 clean_data.to_csv(f'clean_data\clean_{data_name}.csv', index=False)
 clean_data_debrief.to_csv(f'clean_data\clean_{data_name}_debrief.csv', index=False)
 
-# %% COMBINE CLEAN DATA
+# %% COMBINE CLEAN 
+
+df1 = pd.read_csv('clean_data\clean_data_p4;1_dogizqxo.csv')
+df2 = pd.read_csv('clean_data\clean_data_p4;2_pl6dy4ai.csv')
+combined_df = pd.concat([df1, df2])
+combined_df.to_csv('clean_data\combined_data\combined_data_pilot4.csv', index=False)
+
+"""
 df1 = pd.read_csv('clean_data\clean_data_mk1_i5pyilec.csv')
 df2 = pd.read_csv('clean_data\clean_data_mk2_dzoz67y9.csv')
 df3 = pd.read_csv('clean_data\clean_data_mk3_mklqs5l0.csv')
@@ -102,4 +110,14 @@ combined_df_debrief = pd.concat([df1_deb, df2_deb, df3_deb, df4_deb])
 
 combined_df.to_csv('clean_data\combined_data\combined_data.csv', index=False)
 combined_df_debrief.to_csv('clean_data\combined_data\combined_data_debrief.csv', index=False)
+"""
+
+
+
+
+
+
+
+
+
           
