@@ -6,10 +6,11 @@ import os
 from statistics import mean
 
 # %%
+
 data_name = "data_p4;2_pl6dy4ai"
 
-currentDir = os.getcwd()
-csvPath = os.path.join(currentDir, f'raw_data\{data_name}.csv')
+script_location = os.path.dirname(os.path.realpath(__file__))
+csvPath = os.path.join(script_location, 'Ultimatum game/raw_data/' + f'{data_name}')
 print(csvPath)
 raw_data = pd.read_csv(csvPath)
 
