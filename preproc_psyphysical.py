@@ -7,19 +7,21 @@ from statistics import mean
 
 # %%
 
-data_name = "psyphysical_main1.csv"
+data_name = "psyphysical_main1"
 
 script_location = os.path.dirname(os.path.realpath(__file__))
-csvPath = os.path.join(script_location, 'raw_data/Psychophysical/' + f'{data_name}')
+csvPath = os.path.join(script_location, 'raw_data/Psychophysical/' + f'{data_name}' + ".csv")
 print(csvPath)
 raw_data = pd.read_csv(csvPath)
 
-column_names = ["sid","session_code", "mk_session","prolific_id","participant_code", "round_nb", "role","player", "dyad", "manipulation", "mean_social_dominance","mean_aggresive_dominance"]
+column_names = ["sid","session_code", "mk_session","prolific_id","participant_code", "round_nb","player", "dyad", "manipulation", "condition", "difficulty", "confidence_1",
+                "confidence_2", "indv_response", "correct_response", "indv_responded_correctly", "rt_individual", "indv_stim_order", "group_choice", "grp_responded_correctly",
+                "decision_count","group_rt", "both_agree", "mean_social_dominance","mean_aggresive_dominance"]
 clean_data = pd.DataFrame(columns=column_names)
 
 column_debrief = ["sid","session_code", "mk_session", "prolific_id", "participant_code", "player", "mean_social_dominance", "mean_aggresive_dominance", 
-                  "sound_quality", "sound_comment", "fidelity", "fidelity_comment", "xp_goal", "enough_time", "manipulation",
-                  'detection_degree', "manipulation_comment", "unique_interactions", "xp_feedback"]
+                  "sound_quality", "sound_comment", "fidelity", "fidelity_comment", "xp_goal", "manipulation",
+                  'detection_degree', "manipulation_comment", "unique_interactions"]
 clean_data_debrief = pd.DataFrame(columns=column_debrief)
 
 # %%
@@ -27,31 +29,35 @@ clean_data_debrief = pd.DataFrame(columns=column_debrief)
 for subject in raw_data['participant.id_in_session']:
     subject_row = (raw_data[raw_data['participant.id_in_session'] == subject])
     
-    for round in range(1, 21):
+    for round in range(1, 31):
         
-        if subject_row[f'ultimatum_game.{round}.player.player_role'].values[0] == "proposer":
-            rt = subject_row[f'ultimatum_game.{round}.player.proposer_response_time_ms'].values[0]
-        else:
-            rt = subject_row[f'ultimatum_game.{round}.player.responder_response_time_ms'].values[0]
-            
+
         row_data = {
-            'participant_code': subject_row['participant.code'].values[0],
-            'session_code': subject_row['session.code'].values[0],
-            'prolific_id': subject_row['ultimatum_game.20.player.prolific_id'].values[0],
             'sid': subject_row['session.config.name'].values[0],
+            'session_code': subject_row['session.code'].values[0],
             'mk_session': subject_row['session.config.id'].values[0],
-            'trial_payoff': subject_row[f'ultimatum_game.{round}.player.trial_payoff'].values[0],
-            'round_nb': subject_row[f'ultimatum_game.{round}.player.round_nb'].values[0],  
-            'role': subject_row[f'ultimatum_game.{round}.player.player_role'].values[0],
+            'prolific_id': subject_row['interactive_psychophysics.30.player.prolific_id'].values[0],
+            'participant_code': subject_row['participant.code'].values[0],
+            'round_nb': subject_row[f'interactive_psychophysics.{round}.player.round_nb'].values[0],
             'player': subject_row['participant.id_in_session'].values[0],
-            'dyad': subject_row[f'ultimatum_game.{round}.player.dyad'].values[0],
-            'manipulation': subject_row[f'ultimatum_game.{round}.player.manipulation'].values[0],
-            'responded': subject_row[f'ultimatum_game.{round}.player.responded'].values[0],
-            'sent_amount': subject_row[f'ultimatum_game.{round}.group.sent_amount'].values[0],
-            'offer_response': subject_row[f'ultimatum_game.{round}.group.responder_accepted'].values[0],
-            'rt': rt,
-            'mean_social_dominance': mean([float(subject_row[f'ultimatum_game.20.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
-            'mean_aggresive_dominance': mean([float(subject_row[f'ultimatum_game.20.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)])
+            'dyad': subject_row[f'interactive_psychophysics.{round}.player.dyad'].values[0],
+            'manipulation':subject_row[f'interactive_psychophysics.{round}.player.manipulation'].values[0],
+            'condition': subject_row[f'interactive_psychophysics.{round}.player.condition'].values[0],
+            'difficulty': subject_row[f'interactive_psychophysics.{round}.player.difficulty'].values[0],
+            'confidence_1': subject_row[f'interactive_psychophysics.{round}.player.individual_confidence_1'].values[0],
+            'confidence_2': subject_row[f'interactive_psychophysics.{round}.player.individual_confidence_2'].values[0],
+            'indv_response': subject_row[f'interactive_psychophysics.{round}.player.individual_decision'].values[0],
+            'correct_response': subject_row[f'interactive_psychophysics.{round}.player.correct_response'].values[0],
+            'indv_responded_correctly': subject_row[f'interactive_psychophysics.{round}.player.ind_responded_correctly'].values[0],
+            'rt_individual': subject_row[f'interactive_psychophysics.{round}.player.rt_indvidual'].values[0],
+            'indv_stim_order': subject_row[f'interactive_psychophysics.{round}.player.indv_stim_order'].values[0],
+            'group_choice': subject_row[f'interactive_psychophysics.{round}.player.group_choice'].values[0],
+            'grp_correct': subject_row[f'interactive_psychophysics.{round}.player.grp_responded_correctly'].values[0],
+            'decision_count': subject_row[f'interactive_psychophysics.{round}.player.decision_count'].values[0],
+            'group_rt': subject_row[f'interactive_psychophysics.{round}.group.group_rt'].values[0],
+            'both_agree': subject_row[f'interactive_psychophysics.{round}.group.both_agree'].values[0],
+            'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
+            'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)])
             }   
         
         
@@ -61,31 +67,39 @@ for subject in raw_data['participant.id_in_session']:
     row_data_debrief = {
         'participant_code': subject_row['participant.code'].values[0],
         'session_code': subject_row['session.code'].values[0],
-        'prolific_id': subject_row['ultimatum_game.20.player.prolific_id'].values[0],
+        'prolific_id': subject_row['interactive_psychophysics.20.player.prolific_id'].values[0],
         'sid': subject_row['session.config.name'].values[0],
         'mk_session': subject_row['session.config.id'].values[0],
         'player': subject_row['participant.id_in_session'].values[0],
-        'mean_social_dominance': mean([float(subject_row[f'ultimatum_game.20.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
-        'mean_aggresive_dominance': mean([float(subject_row[f'ultimatum_game.20.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
-        'sound_quality': subject_row['ultimatum_game.20.player.final_quality'].values[0],
-        'sound_comment': subject_row['ultimatum_game.20.player.final_quality_comment'].values[0],
-        'fidelity':  subject_row['ultimatum_game.20.player.final_conversation_fidelity'].values[0],
-        'fidelity_comment': subject_row['ultimatum_game.20.player.final_conversation_fidelity_comment'].values[0],
-        'xp_goal': subject_row['ultimatum_game.20.player.final_xp_goal'].values[0],
-        'enough_time': subject_row['ultimatum_game.20.player.enough_time'].values[0],
-        'manipulation': subject_row['ultimatum_game.20.player.manip_yes_no'].values[0],
-        'detection_degree': subject_row['ultimatum_game.20.player.detection_degree'].values[0],
-        'manipulation_comment': subject_row['ultimatum_game.20.player.final_manipulation_comment'].values[0],
-        'unique_interactions': subject_row['ultimatum_game.20.player.unique_interactions'].values[0],
-        'xp_feedback':  subject_row['ultimatum_game.20.player.game_feedback'].values[0],
+        'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.20.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
+        'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.20.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
+        'sound_quality': subject_row['interactive_psychophysics.20.player.final_quality'].values[0],
+        'sound_comment': subject_row['interactive_psychophysics.20.player.final_quality_comment'].values[0],
+        'fidelity':  subject_row['interactive_psychophysics.20.player.final_conversation_fidelity'].values[0],
+        'fidelity_comment': subject_row['interactive_psychophysics.20.player.final_conversation_fidelity_comment'].values[0],
+        'xp_goal': subject_row['interactive_psychophysics.20.player.final_xp_goal'].values[0],
+        'manipulation': subject_row['interactive_psychophysics.20.player.manip_yes_no'].values[0],
+        'detection_degree': subject_row['interactive_psychophysics.20.player.detection_degree'].values[0],
+        'manipulation_comment': subject_row['interactive_psychophysics.20.player.final_manipulation_comment'].values[0],
+        'unique_interactions': subject_row['interactive_psychophysics.20.player.unique_interactions'].values[0]
         
         
         }
         
     clean_data_debrief = pd.concat([clean_data_debrief, pd.DataFrame([row_data_debrief])], ignore_index=True)
 
-clean_data.to_csv(f'clean_data\clean_{data_name}.csv', index=False)
-clean_data_debrief.to_csv(f'clean_data\clean_{data_name}_debrief.csv', index=False)
+# Save to a directory where you have write permissions
+output_directory = os.path.join(os.path.expanduser("~"), "Documents", "clean_data")
+os.makedirs(output_directory, exist_ok=True)
+
+clean_data_path = os.path.join(output_directory, f'clean_{data_name}.csv')
+clean_data_debrief_path = os.path.join(output_directory, f'clean_{data_name}_debrief.csv')
+
+clean_data.to_csv(clean_data_path, index=False)
+clean_data_debrief.to_csv(clean_data_debrief_path, index=False)
+
+print(f"Data saved to {clean_data_path}")
+print(f"Debrief data saved to {clean_data_debrief_path}")
 
 # %% COMBINE CLEAN 
 
