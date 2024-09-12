@@ -1,0 +1,24 @@
+0
+0:00:01.100000-->0:00:08.770000
+ Go ahead. Make an offer.
+
+1
+0:00:09.980000-->0:00:12.880000
+ Now I'll reject anything less than 10.
+
+2
+0:00:13.860000-->0:00:14.620000
+ 10 is fair.
+
+3
+0:00:14.800000-->0:00:17.860000
+ How do you feel if I said I'll reject anything less than 15,
+
+4
+0:00:17.860000-->0:00:20.540000
+ which is basically what you just did by offering 5.
+
+5
+0:00:21.050000-->0:00:23.930000
+ So at least 10. 10 is fair, OK?
+

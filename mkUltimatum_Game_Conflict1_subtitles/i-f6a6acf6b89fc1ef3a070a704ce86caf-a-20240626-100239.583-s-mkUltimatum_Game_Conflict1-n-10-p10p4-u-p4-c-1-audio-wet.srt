@@ -1,0 +1,4 @@
+0
+0:00:03.400000-->0:00:20.440000
+ Hello, yeah, good day. How many coins are you negotiating?
+

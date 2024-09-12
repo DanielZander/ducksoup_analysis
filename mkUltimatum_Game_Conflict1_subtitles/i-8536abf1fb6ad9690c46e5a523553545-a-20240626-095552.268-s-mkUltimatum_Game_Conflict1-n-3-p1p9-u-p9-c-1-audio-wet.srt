@@ -1,0 +1,16 @@
+0
+0:00:04.710000-->0:00:05.070000
+ Oh
+
+1
+0:00:07.650000-->0:00:11.510000
+ Hello, if you have 20 coins and I suggest we allocate 10 each
+
+2
+0:00:16.340000-->0:00:19.880000
+ Now I'll be rejecting that I won't be accepting anything less. It's 10 each
+
+3
+0:00:23.720000-->0:00:26.040000
+ Nope, not sorry only 10
+

@@ -1,0 +1,40 @@
+0
+0:00:02.350000-->0:00:02.710000
+ Hiya.
+
+1
+0:00:04.590000-->0:00:05.090000
+ Just checking.
+
+2
+0:00:07.600000-->0:00:07.700000
+ Sorry?
+
+3
+0:00:10.880000-->0:00:11.640000
+ No, of course I wouldn't.
+
+4
+0:00:11.640000-->0:00:14.040000
+ Would you take 5 coins for yourself and 15 for me?
+
+5
+0:00:14.040000-->0:00:15.700000
+ I'm rejecting anything less than 10.
+
+6
+0:00:15.700000-->0:00:16.600000
+ It's as simple as that.
+
+7
+0:00:17.100000-->0:00:18.040000
+ I've just rejected a 9.
+
+8
+0:00:19.480000-->0:00:20.540000
+ Yeah. I've just rejected a 9.
+
+9
+0:00:21.100000-->0:00:22.600000
+ I'm quite happy to reject anything less than 10.
+

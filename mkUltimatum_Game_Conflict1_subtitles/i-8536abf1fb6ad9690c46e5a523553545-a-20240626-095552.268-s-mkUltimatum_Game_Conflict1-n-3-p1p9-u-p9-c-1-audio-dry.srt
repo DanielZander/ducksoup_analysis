@@ -1,0 +1,12 @@
+0
+0:00:04.350000-->0:00:11.520000
+ Hello? Hello, if you have 20 coins then I suggest we allocate 10 each.
+
+1
+0:00:16.290000-->0:00:19.850000
+ No, I'll be rejecting that, I won't be accepting anything unless it's 10 each.
+
+2
+0:00:23.620000-->0:00:26.100000
+ Nope, fair enough, sorry, only 10 remaining.
+

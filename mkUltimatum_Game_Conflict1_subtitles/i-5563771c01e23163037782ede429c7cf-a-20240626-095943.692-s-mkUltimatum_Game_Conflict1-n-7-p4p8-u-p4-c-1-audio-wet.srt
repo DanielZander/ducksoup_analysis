@@ -1,0 +1,8 @@
+0
+0:00:01.100000-->0:00:10.040000
+ Hi. Would you take five coins? Would you take five coins?
+
+1
+0:00:16.420000-->0:00:25.690000
+ Objective goes to less than ten. OK. Fair enough. Fair enough.
+

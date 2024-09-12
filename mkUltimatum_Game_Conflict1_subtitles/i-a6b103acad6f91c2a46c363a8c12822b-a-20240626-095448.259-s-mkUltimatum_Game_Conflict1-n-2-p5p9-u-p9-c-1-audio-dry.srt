@@ -1,0 +1,16 @@
+0
+0:00:05.440000-->0:00:08.960000
+ Hello, if you have 20 coins, I guess 10 each would be the fairest thing?
+
+1
+0:00:08.960000-->0:00:15.990000
+ I won't be accepting it unless it's 10.
+
+2
+0:00:15.990000-->0:00:22.370000
+ Okay, I'll be reducing that then.
+
+3
+0:00:25.340000-->0:00:26.100000
+ Nope, fair enough.
+

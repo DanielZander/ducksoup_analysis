@@ -1,0 +1,12 @@
+0
+0:00:03.500000-->0:00:09.520000
+ Hello? Hello? Hello?
+
+1
+0:00:12.380000-->0:00:15.660000
+ Now, if you have 20 then the fairest thing would be to allocate 10 each.
+
+2
+0:00:20.110000-->0:00:22.150000
+ Sorry, I'll be rejecting it unless it's 10.
+

@@ -1,0 +1,16 @@
+0
+0:00:01.940000-->0:00:06.420000
+ Hello. What are you doing?
+
+1
+0:00:08.450000-->0:00:09.590000
+ Was that four coins?
+
+2
+0:00:13.250000-->0:00:16.160000
+ Would you be interested to go up to six coins, potentially?
+
+3
+0:00:20.200000-->0:00:23.180000
+ Fine. Five then. Deal.
+

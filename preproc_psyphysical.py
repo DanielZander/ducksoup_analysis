@@ -1,5 +1,5 @@
 """
-Preprocessing script of behavioral data for the ultimatum game
+Preprocessing script of behavioral data for the Psychophysical game
 """
 import pandas as pd
 import os
@@ -14,8 +14,7 @@ csvPath = os.path.join(script_location, 'raw_data/Psychophysical/' + f'{data_nam
 print(csvPath)
 raw_data = pd.read_csv(csvPath)
 
-column_names = ["sid","session_code", "mk_session","prolific_id","participant_code", "round_nb", "role","player", "dyad", "manipulation",
-                 "trial_payoff", "responded", "sent_amount", "offer_response", "rt","mean_social_dominance","mean_aggresive_dominance"]
+column_names = ["sid","session_code", "mk_session","prolific_id","participant_code", "round_nb", "role","player", "dyad", "manipulation", "mean_social_dominance","mean_aggresive_dominance"]
 clean_data = pd.DataFrame(columns=column_names)
 
 column_debrief = ["sid","session_code", "mk_session", "prolific_id", "participant_code", "player", "mean_social_dominance", "mean_aggresive_dominance", 

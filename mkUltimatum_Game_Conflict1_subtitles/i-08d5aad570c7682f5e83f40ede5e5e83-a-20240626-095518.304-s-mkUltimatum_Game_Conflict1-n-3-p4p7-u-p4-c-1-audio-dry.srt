@@ -1,0 +1,8 @@
+0
+0:00:01.700000-->0:00:19.080000
+ Hello. I'll offer you four coins. What would you suggest? Would you take eight?
+
+1
+0:00:19.180000-->0:00:24.280000
+ Or would you take ten?
+

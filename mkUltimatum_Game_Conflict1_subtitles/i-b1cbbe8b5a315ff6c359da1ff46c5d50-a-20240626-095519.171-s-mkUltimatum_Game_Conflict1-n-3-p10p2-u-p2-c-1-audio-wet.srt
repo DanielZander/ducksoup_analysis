@@ -1,0 +1,8 @@
+0
+0:00:01-->0:00:06.600000
+ Hello? Yeah, I'm prepared to offer you five coins.
+
+1
+0:00:06.600000-->0:00:21.560000
+ Okay, thanks. That's nice and simple.
+

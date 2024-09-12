@@ -1,0 +1,8 @@
+0
+0:00:02.850000-->0:00:08.970000
+ Hello. I'm good, thanks. How are you?
+
+1
+0:00:18.300000-->0:00:25.720000
+ Okay, my offer from here is three coins to head to you.
+

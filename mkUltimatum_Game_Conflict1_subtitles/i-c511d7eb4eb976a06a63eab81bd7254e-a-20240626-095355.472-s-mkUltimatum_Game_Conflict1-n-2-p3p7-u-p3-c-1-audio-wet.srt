@@ -1,0 +1,4 @@
+0
+0:00:02.600000-->0:00:23.020000
+ Hey, I have 5 coins, how about 7, take 7, no 10 is too much, take 7.
+
