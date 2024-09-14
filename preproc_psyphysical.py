@@ -52,7 +52,7 @@ for subject in raw_data['participant.id_in_session']:
             'rt_individual': subject_row[f'interactive_psychophysics.{round}.player.rt_indvidual'].values[0],
             'indv_stim_order': subject_row[f'interactive_psychophysics.{round}.player.indv_stim_order'].values[0],
             'group_choice': subject_row[f'interactive_psychophysics.{round}.player.group_choice'].values[0],
-            'grp_correct': subject_row[f'interactive_psychophysics.{round}.player.grp_responded_correctly'].values[0],
+            'grp_responded_correctly': subject_row[f'interactive_psychophysics.{round}.player.grp_responded_correctly'].values[0],
             'decision_count': subject_row[f'interactive_psychophysics.{round}.player.decision_count'].values[0],
             'group_rt': subject_row[f'interactive_psychophysics.{round}.group.group_rt'].values[0],
             'both_agree': subject_row[f'interactive_psychophysics.{round}.group.both_agree'].values[0],
