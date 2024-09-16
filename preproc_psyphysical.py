@@ -67,21 +67,21 @@ for subject in raw_data['participant.id_in_session']:
     row_data_debrief = {
         'participant_code': subject_row['participant.code'].values[0],
         'session_code': subject_row['session.code'].values[0],
-        'prolific_id': subject_row['interactive_psychophysics.20.player.prolific_id'].values[0],
+        'prolific_id': subject_row['interactive_psychophysics.30.player.prolific_id'].values[0],
         'sid': subject_row['session.config.name'].values[0],
         'mk_session': subject_row['session.config.id'].values[0],
         'player': subject_row['participant.id_in_session'].values[0],
-        'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.20.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
-        'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.20.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
-        'sound_quality': subject_row['interactive_psychophysics.20.player.final_quality'].values[0],
-        'sound_comment': subject_row['interactive_psychophysics.20.player.final_quality_comment'].values[0],
-        'fidelity':  subject_row['interactive_psychophysics.20.player.final_conversation_fidelity'].values[0],
-        'fidelity_comment': subject_row['interactive_psychophysics.20.player.final_conversation_fidelity_comment'].values[0],
-        'xp_goal': subject_row['interactive_psychophysics.20.player.final_xp_goal'].values[0],
-        'manipulation': subject_row['interactive_psychophysics.20.player.manip_yes_no'].values[0],
-        'detection_degree': subject_row['interactive_psychophysics.20.player.detection_degree'].values[0],
-        'manipulation_comment': subject_row['interactive_psychophysics.20.player.final_manipulation_comment'].values[0],
-        'unique_interactions': subject_row['interactive_psychophysics.20.player.unique_interactions'].values[0]
+        'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
+        'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
+        'sound_quality': subject_row['interactive_psychophysics.30.player.final_quality'].values[0],
+        'sound_comment': subject_row['interactive_psychophysics.30.player.final_quality_comment'].values[0],
+        'fidelity':  subject_row['interactive_psychophysics.30.player.final_conversation_fidelity'].values[0],
+        'fidelity_comment': subject_row['interactive_psychophysics.30.player.final_conversation_fidelity_comment'].values[0],
+        'xp_goal': subject_row['interactive_psychophysics.30.player.final_xp_goal'].values[0],
+        'manipulation': subject_row['interactive_psychophysics.30.player.manip_yes_no'].values[0],
+        'detection_degree': subject_row['interactive_psychophysics.30.player.detection_degree'].values[0],
+        'manipulation_comment': subject_row['interactive_psychophysics.30.player.final_manipulation_comment'].values[0],
+        'unique_interactions': subject_row['interactive_psychophysics.30.player.unique_interactions'].values[0]
         
         
         }
