@@ -7,7 +7,7 @@ from statistics import mean
 
 # %%
 
-data_name = "psyphysical_main1"
+data_name = "test"
 
 script_location = os.path.dirname(os.path.realpath(__file__))
 csvPath = os.path.join(script_location, 'raw_data/Psychophysical/' + f'{data_name}' + ".csv")
@@ -29,14 +29,14 @@ clean_data_debrief = pd.DataFrame(columns=column_debrief)
 for subject in raw_data['participant.id_in_session']:
     subject_row = (raw_data[raw_data['participant.id_in_session'] == subject])
     
-    for round in range(1, 31):
+    for round in range(1, 35):
         
 
         row_data = {
             'sid': subject_row['session.config.name'].values[0],
             'session_code': subject_row['session.code'].values[0],
             'mk_session': subject_row['session.config.id'].values[0],
-            'prolific_id': subject_row['interactive_psychophysics.30.player.prolific_id'].values[0],
+            'prolific_id': subject_row['interactive_psychophysics.34.player.prolific_id'].values[0],
             'participant_code': subject_row['participant.code'].values[0],
             'round_nb': subject_row[f'interactive_psychophysics.{round}.player.round_nb'].values[0],
             'player': subject_row['participant.id_in_session'].values[0],
@@ -56,8 +56,8 @@ for subject in raw_data['participant.id_in_session']:
             'decision_count': subject_row[f'interactive_psychophysics.{round}.player.decision_count'].values[0],
             'group_rt': subject_row[f'interactive_psychophysics.{round}.group.group_rt'].values[0],
             'both_agree': subject_row[f'interactive_psychophysics.{round}.group.both_agree'].values[0],
-            'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
-            'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)])
+            'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.34.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
+            'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.34.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)])
             }   
         
         
@@ -67,21 +67,21 @@ for subject in raw_data['participant.id_in_session']:
     row_data_debrief = {
         'participant_code': subject_row['participant.code'].values[0],
         'session_code': subject_row['session.code'].values[0],
-        'prolific_id': subject_row['interactive_psychophysics.30.player.prolific_id'].values[0],
+        'prolific_id': subject_row['interactive_psychophysics.34.player.prolific_id'].values[0],
         'sid': subject_row['session.config.name'].values[0],
         'mk_session': subject_row['session.config.id'].values[0],
         'player': subject_row['participant.id_in_session'].values[0],
-        'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
-        'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.30.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
-        'sound_quality': subject_row['interactive_psychophysics.30.player.final_quality'].values[0],
-        'sound_comment': subject_row['interactive_psychophysics.30.player.final_quality_comment'].values[0],
-        'fidelity':  subject_row['interactive_psychophysics.30.player.final_conversation_fidelity'].values[0],
-        'fidelity_comment': subject_row['interactive_psychophysics.30.player.final_conversation_fidelity_comment'].values[0],
-        'xp_goal': subject_row['interactive_psychophysics.30.player.final_xp_goal'].values[0],
-        'manipulation': subject_row['interactive_psychophysics.30.player.manip_yes_no'].values[0],
-        'detection_degree': subject_row['interactive_psychophysics.30.player.detection_degree'].values[0],
-        'manipulation_comment': subject_row['interactive_psychophysics.30.player.final_manipulation_comment'].values[0],
-        'unique_interactions': subject_row['interactive_psychophysics.30.player.unique_interactions'].values[0]
+        'mean_social_dominance': mean([float(subject_row[f'interactive_psychophysics.34.player.social_dominance_{question_social}'].values[0]) for question_social in range(1, 9)]),
+        'mean_aggresive_dominance': mean([float(subject_row[f'interactive_psychophysics.34.player.aggressive_dominance_{question_aggresive}'].values[0]) for question_aggresive in range(1, 8)]),
+        'sound_quality': subject_row['interactive_psychophysics.34.player.final_quality'].values[0],
+        'sound_comment': subject_row['interactive_psychophysics.34.player.final_quality_comment'].values[0],
+        'fidelity':  subject_row['interactive_psychophysics.34.player.final_conversation_fidelity'].values[0],
+        'fidelity_comment': subject_row['interactive_psychophysics.34.player.final_conversation_fidelity_comment'].values[0],
+        'xp_goal': subject_row['interactive_psychophysics.34.player.final_xp_goal'].values[0],
+        'manipulation': subject_row['interactive_psychophysics.34.player.manip_yes_no'].values[0],
+        'detection_degree': subject_row['interactive_psychophysics.34.player.detection_degree'].values[0],
+        'manipulation_comment': subject_row['interactive_psychophysics.34.player.final_manipulation_comment'].values[0],
+        'unique_interactions': subject_row['interactive_psychophysics.34.player.unique_interactions'].values[0]
         
         
         }
@@ -89,6 +89,15 @@ for subject in raw_data['participant.id_in_session']:
     clean_data_debrief = pd.concat([clean_data_debrief, pd.DataFrame([row_data_debrief])], ignore_index=True)
 
 # Save to a directory where you have write permissions
+output_path = os.path.join(script_location, 'cleaned_data', f'{data_name}_cleaned.csv')
+
+# Ensure the directory exists
+os.makedirs(os.path.dirname(output_path), exist_ok=True)
+
+# Save to the specified file path
+clean_data.to_csv(output_path, index=False)
+
+"""
 output_directory = os.path.join(os.path.expanduser("~"), "Documents", "clean_data")
 os.makedirs(output_directory, exist_ok=True)
 
@@ -101,14 +110,16 @@ clean_data_debrief.to_csv(clean_data_debrief_path, index=False)
 print(f"Data saved to {clean_data_path}")
 print(f"Debrief data saved to {clean_data_debrief_path}")
 
-# %% COMBINE CLEAN 
+"""
 
+# %% COMBINE CLEAN 
+"""
 df1 = pd.read_csv('clean_data\clean_data_p4;1_dogizqxo.csv')
 df2 = pd.read_csv('clean_data\clean_data_p4;2_pl6dy4ai.csv')
 combined_df = pd.concat([df1, df2])
 combined_df.to_csv('clean_data\combined_data\combined_data_pilot4.csv', index=False)
 
-"""
+
 df1 = pd.read_csv('clean_data\clean_data_mk1_i5pyilec.csv')
 df2 = pd.read_csv('clean_data\clean_data_mk2_dzoz67y9.csv')
 df3 = pd.read_csv('clean_data\clean_data_mk3_mklqs5l0.csv')
