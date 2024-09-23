@@ -7,7 +7,7 @@ from statistics import mean
 
 # %%
 
-data_name = "test"
+data_name = "psyphysical_main2"
 
 script_location = os.path.dirname(os.path.realpath(__file__))
 csvPath = os.path.join(script_location, 'raw_data/Psychophysical/' + f'{data_name}' + ".csv")
@@ -81,7 +81,8 @@ for subject in raw_data['participant.id_in_session']:
         'manipulation': subject_row['interactive_psychophysics.34.player.manip_yes_no'].values[0],
         'detection_degree': subject_row['interactive_psychophysics.34.player.detection_degree'].values[0],
         'manipulation_comment': subject_row['interactive_psychophysics.34.player.final_manipulation_comment'].values[0],
-        'unique_interactions': subject_row['interactive_psychophysics.34.player.unique_interactions'].values[0]
+        'unique_interactions': subject_row['interactive_psychophysics.34.player.unique_interactions'].values[0],
+        
         
         
         }
