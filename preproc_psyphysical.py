@@ -7,7 +7,7 @@ from statistics import mean
 
 # %%
 
-data_name = "psyphysical_main2"
+data_name = "psyphysical_main3"
 
 script_location = os.path.dirname(os.path.realpath(__file__))
 csvPath = os.path.join(script_location, 'raw_data/Psychophysical/' + f'{data_name}' + ".csv")
