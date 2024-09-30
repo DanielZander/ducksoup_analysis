@@ -21,7 +21,7 @@ clean_data = pd.DataFrame(columns=column_names)
 
 column_debrief = ["sid","session_code", "mk_session", "prolific_id", "participant_code", "player", "mean_social_dominance", "mean_aggresive_dominance", 
                   "sound_quality", "sound_comment", "fidelity", "fidelity_comment", "xp_goal", "manipulation",
-                  'detection_degree', "manipulation_comment", "unique_interactions"]
+                  'detection_degree', "manipulation_comment", "unique_interactions", "stim_manip_detec"]
 clean_data_debrief = pd.DataFrame(columns=column_debrief)
 
 # %%
@@ -82,13 +82,13 @@ for subject in raw_data['participant.id_in_session']:
         'detection_degree': subject_row['interactive_psychophysics.34.player.detection_degree'].values[0],
         'manipulation_comment': subject_row['interactive_psychophysics.34.player.final_manipulation_comment'].values[0],
         'unique_interactions': subject_row['interactive_psychophysics.34.player.unique_interactions'].values[0],
-        
-        
+        'stim_manip_detec': subject_row['interactive_psychophysics.34.player.stim_manip_detec'].values[0]
         
         }
         
     clean_data_debrief = pd.concat([clean_data_debrief, pd.DataFrame([row_data_debrief])], ignore_index=True)
 
+"""
 # Save to a directory where you have write permissions
 output_path = os.path.join(script_location, 'cleaned_data', f'{data_name}_cleaned.csv')
 
@@ -102,16 +102,13 @@ clean_data.to_csv(output_path, index=False)
 output_directory = os.path.join(os.path.expanduser("~"), "Documents", "clean_data")
 os.makedirs(output_directory, exist_ok=True)
 
-clean_data_path = os.path.join(output_directory, f'clean_{data_name}.csv')
 clean_data_debrief_path = os.path.join(output_directory, f'clean_{data_name}_debrief.csv')
 
-clean_data.to_csv(clean_data_path, index=False)
 clean_data_debrief.to_csv(clean_data_debrief_path, index=False)
 
-print(f"Data saved to {clean_data_path}")
 print(f"Debrief data saved to {clean_data_debrief_path}")
 
-"""
+
 
 # %% COMBINE CLEAN 
 """
