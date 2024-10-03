@@ -19,22 +19,17 @@ library(ggdark)
 # ---------------------------------------------------------------------------#
 
 pilot_data     = read.csv("analysis/power/postprocc_df.csv") #data from the processed and analysed notebook, with all the additional variables (conf_change, grp_follows_indv, etc.)
-conflict_trials = pilot_data[pilot_data$condition == "Conflict", ]
+pilot_data$group_follows_individual <- as.integer(as.logical(as.character(pilot_data$group_follows_individual)))
+pilot_data$manipulation = factor(pilot_data$manipulation, levels = c("submissive", "dominant"))
 
-conflict_trials$group_follows_individual <- as.integer(as.logical(as.character(conflict_trials$group_follows_individual)))
+conflict_trials = pilot_data[pilot_data$condition == "Conflict", ]
 aggregate(group_follows_individual ~ manipulation, conflict_trials, mean)
 #  manipulation         group_follows_individual
 #1     dominant                0.5952381
 #2   submissive                0.4285714
 #difference in probability = 0.167
 
-dom_data = conflict_trials[conflict_trials$manipulation == "dominant", "group_follows_individual"]
-sub_data = conflict_trials[conflict_trials$manipulation == "submissive", "group_follows_individual"]
-cohensD(dom_data, sub_data)
-# Raw pilot data suggest a small cohends d = 0.3341103
-
-conflict_trials$manipulation = factor(conflict_trials$manipulation, levels = c("submissive", "dominant"))
-model = glmer(group_follows_individual ~ manipulation + (manipulation|player),
+model = glmer(group_follows_individual ~ manipulation + (1|player),
              data = conflict_trials, family = "binomial")
 summary(model)
 
@@ -74,6 +69,13 @@ summary(model_2)
 #manipulationdominant   0.6608     0.5287   1.250   0.2114
 #higher_confTrue        2.4587     0.5290   4.647 3.36e-06 ***
 
+intercept = plogis(-1.4903)
+high_conf_sub = plogis(-1.4903 + 2.4587)
+high_conf_dom = plogis(-1.4903 + 2.4587 + 0.6608)
+
+high_conf_dom-high_conf_sub
+#Increase due to dom manip = 0.1112595. 
+
 # ---------------------------------------------------------------------------#
 # ---------------------------------------------------------------------------#
 #                   Create df for conflict trials
@@ -104,7 +106,8 @@ df = df%>%mutate(player      = as.factor(player),
 
 intercept  = qlogis(0.4285714) #log-odds intercept based on raw data.
 
-#Select a slope 
+#SELECT A SLOPE
+
 #manip_beta = qlogis(0.5952381)-qlogis(0.4285714) #log-odds slope based on raw data.
 manip_beta = qlogis(0.53)-qlogis(0.4285714) #log-odds slope for 10% prob increase
 #manip_beta = qlogis(0.49)-qlogis(0.4285714) #log-odds slope for 6% prob increase
@@ -127,7 +130,7 @@ fixed_effects = c(intercept,manip_beta)
 
 df$manipulation = factor(df$manipulation, levels = c("submissive","dominant"))
 
-df_sim = makeGlmer(group_follows_individual ~ manipulation + (manipulation | player),
+df_sim = makeGlmer(group_follows_individual ~ manipulation + (1 | player),
                    family = "binomial", fixef = fixed_effects,
                    VarCorr =  list(matrix(c(0.35), 1, 1)), data = df) #participant variance based on pilot data.
                   
@@ -221,6 +224,8 @@ power_data <- data.frame(
           15.16, 22.37, 32.49, 31.39, 37.87, 47.24, 54.28, 55.27, 68.74, 71.52, 76.08, 80.52, 80.52, 80.52, 84.83, 87.33, 92.13), # slope = 0.06
   odds_ratio = c(rep("1.96 - Large", 10), rep("1.5 - Medium", 10), rep("1.28 - Small", 17)) # repeating odds_ratio values for each power analysis
 )
+power_data$odds_ratio = factor(power_data$odds_ratio, levels = c("1.28 - Small", "1.5 - Medium", "1.96 - Large"))
+
 
 palette <- brewer.pal(n = length(unique(power_data$slope)), name = "Set2")
 power_data$slope = as.factor(power_data$slope)
@@ -233,7 +238,7 @@ power_plot = ggplot(data = power_data, aes(sample_size, power, ymin = min, ymax 
   labs(x = "Sample Size",y = "Power (%)", title = "Power estimates - subject random intercepts model", color = "Odds ratios (effect size)")+
   # Customize labels and title
   labs(x = "Sample Size", y = "Power (%)", 
-       title = "Power Estimates - Subject Random Intercepts Model",
+       title = "Power Estimates - Subject random intercepts model",
        color = "Odds ratios (effect size)") +
          scale_color_brewer(palette = "Set2") +
    theme(
@@ -246,11 +251,220 @@ power_plot = ggplot(data = power_data, aes(sample_size, power, ymin = min, ymax 
     legend.text = element_text(size = 12),  # Resize legend text
     legend.title = element_text(size = 14, face = "bold")  # Bold legend title
   )+
-  dark_theme_bw()
+  theme_bw()
 
 ggsave("power_plot.png",plot = power_plot, width = 8, height = 6)
 
 result = wp.logistic(n = seq(100,3000,50), p0 = 0.4285714, p1 = 0.49, alpha = 0.05,
                     power = NULL, family = 'Bernoulli', parameter = 0.5)
 result
+# ---------------------------------------------------------------------------#
+# ---------------------------------------------------------------------------#
+#                  Simulation with all trials - interaction model 
+# ---------------------------------------------------------------------------#
+# ---------------------------------------------------------------------------#
 
+
+# -----------------------Get slope estimates---------------------------------#
+
+pilot_data$condition = factor(pilot_data$condition, levels=c( "Non-conflict", "Conflict"))
+model_interact = glmer(group_follows_individual ~ manipulation * condition + (1 | player),
+             data = pilot_data, family = "binomial")
+summary(model_interact)
+
+#Fixed effects:
+#                                       Estimate Std. Error z value Pr(>|z|)    
+#(Intercept)                              2.4649     0.5034   4.896 9.78e-07 ***
+#manipulationdominant                    -0.2033     0.6378  -0.319    0.750
+#conditionConflict                       -2.7640     0.5742  -4.814 1.48e-06 ***
+#manipulationdominant:conditionConflict   0.9037     0.7821   1.155    0.248
+
+
+plogis(2.4649 + -0.2033 + -2.7640 + 0.9037) - plogis(2.4649 + -0.2033 + -2.7640)
+#0.2220231
+#The interaction between being in the dominant condition and conflict trials 
+#increases the probability of the group following the individual by about 22% compared to when this interaction is not present.
+
+# Create a new dataset for predictions based on unique combinations of manipulation and condition
+new_data <- expand.grid(
+  manipulation = levels(pilot_data$manipulation),
+  condition = levels(pilot_data$condition),
+  player = unique(pilot_data$player)[1]  # Use one player for prediction
+)
+
+# Get predicted probabilities (type="response" gives probabilities rather than log-odds)
+new_data$predicted_prob <- predict(model_interact, newdata = new_data, type = "response")
+
+# Plot interaction effect
+ggplot(new_data, aes(x = condition, y = predicted_prob, fill = manipulation, group = manipulation)) +
+  geom_col(position = position_dodge(width = 0.7)) + 
+  labs(title = "Interaction Effect of Manipulation and Condition",
+       y = "Predicted Probability", x = "Condition") +
+  theme_minimal()
+
+
+
+# -----------------------generate new data frame for all trials---------------------------------#
+nsubjects = 200  # max sample size for analysis
+ntrial_nonconflict = 20  # 20 trials for Non-conflict
+ntrial_conflict = 14     # 14 trials for Conflict
+subject_ID = 1:nsubjects
+
+df = data.frame()
+for (i in subject_ID) {
+  player = rep(i, ntrial_nonconflict + ntrial_conflict)
+  
+  # Create 20 Non-conflict trials: 10 dominant, 10 submissive
+  condition_nonconflict = rep("Non-conflict", ntrial_nonconflict)
+  manipulation_nonconflict = c(rep("dominant", 10), rep("submissive", 10))
+  
+  # Create 14 Conflict trials: 7 dominant, 7 submissive
+  condition_conflict = rep("Conflict", ntrial_conflict)
+  manipulation_conflict = c(rep("dominant", 7), rep("submissive", 7))
+  
+  # Combine non-conflict and conflict trials for this participant
+  condition = c(condition_nonconflict, condition_conflict)
+  manipulation = c(manipulation_nonconflict, manipulation_conflict)
+  
+  # Shuffle the rows to randomize the order
+  tmp = data.frame(player, condition, manipulation)
+  tmp = tmp[sample(1:nrow(tmp)), ]
+  
+  # Add to the main dataframe
+  df = rbind(df, tmp)
+}
+
+# Convert columns to factors
+df = df %>%
+  mutate(player = as.factor(player), 
+         condition = as.factor(condition),
+         manipulation = as.factor(manipulation))
+
+df_summary_per_participant <- df %>%
+  group_by(player, condition, manipulation) %>%
+  summarise(count = n()) %>%
+  ungroup()  # Optional: to remove grouping after summarizing
+
+# Display the summary
+df_summary_per_participant
+
+#SELECT FIXED EFFECTS 
+#fixed_effects = c(2.4649, -0.2033, -2.7640, 0.9037) #LARGE FROM PILOT DATA
+#fixed_effects = c(2.4649, -0.2033, -2.7640, 0.6037) #MEDIUM INTERACTION SLOPE
+fixed_effects = c(2.4649, -0.2033, -2.7640, 0.4037) #SMALLer INTERACTION SLOPE
+
+
+df$condition = factor(df$condition, levels=c( "Non-conflict", "Conflict"))
+df$manipulation = factor(df$manipulation, levels = c("submissive", "dominant"))
+df_sim = makeGlmer(group_follows_individual ~ manipulation * condition + (1 | player),
+                   family = "binomial", fixef = fixed_effects,
+                   VarCorr =  list(matrix(c(0.5), 1, 1)), data = df) #participant variance based on pilot data.
+summary(df_sim)
+
+
+# Create a new dataset for predictions based on unique combinations of manipulation and condition
+#new_data <- expand.grid(
+ # manipulation = levels(df_sim$manipulation),
+ # condition = levels(df_sim$condition),
+ # player = unique(df_sim$player)[1]  # Use one player for prediction
+#)
+
+# Get predicted probabilities (type="response" gives probabilities rather than log-odds)
+#new_data$predicted_prob <- predict(df_sim, newdata = new_data, type = "response")
+
+# Plot interaction effect
+#ggplot(new_data, aes(x = condition, y = predicted_prob, fill = manipulation, group = manipulation)) +
+#  geom_col(position = position_dodge(width = 0.7)) + 
+#  labs(title = "Interaction Effect of Manipulation and Condition",
+#       y = "Predicted Probability", x = "Condition") +
+#  theme_minimal()
+
+
+
+pcurves=powerCurve(df_sim,breaks=c(60, 100, 130, 150, 170, 200),nsim=100, along="player", test = fixed("manipulationdominant:conditionConflict"))
+pcurves
+plot(pcurves)
+
+#Based on pilot interaction-slope = 0.9037
+#Power for predictor 'manipulationdominant:conditionConflict', (95% confidence interval),
+#by number of levels in player:
+#     10: 37.00% (27.56, 47.24) - 340 rows
+#     20: 59.00% (48.71, 68.74) - 680 rows
+#     30: 81.00% (71.93, 88.16) - 1020 rows
+#     40: 89.00% (81.17, 94.38) - 1360 rows
+#     60: 96.00% (90.07, 98.90) - 2040 rows
+#     70: 98.00% (92.96, 99.76) - 2380 rows
+
+
+#Based on medium interaction-slope = 0.6037
+#Power for predictor 'manipulationdominant:conditionConflict', (95% confidence interval),
+#by number of levels in player:
+#     10: 13.00% ( 7.11, 21.20) - 340 rows
+#     20: 25.00% (16.88, 34.66) - 680 rows
+#     30: 32.00% (23.02, 42.08) - 1020 rows
+#     40: 45.00% (35.03, 55.27) - 1360 rows
+#     60: 69.00% (58.97, 77.87) - 2040 rows
+#     70: 79.00% (69.71, 86.51) - 2380 rows
+#     80: 81.00% (71.93, 88.16) - 2720 rows
+#     90: 90.00% (82.38, 95.10) - 3060 rows
+#    100: 91.00% (83.60, 95.80) - 3400 rows
+
+#Based on small interaction-slope = 0.4037
+#Power for predictor 'manipulationdominant:conditionConflict', (95% confidence interval),
+#by number of levels in player:
+#     60: 39.00% (29.40, 49.27) - 2040 rows
+#    100: 62.00% (51.75, 71.52) - 3400 rows
+#    130: 66.00% (55.85, 75.18) - 4420 rows
+#    150: 75.00% (65.34, 83.12) - 5100 rows
+#    170: 80.00% (70.82, 87.33) - 5780 rows
+#    200: 86.00% (77.63, 92.13) - 6800 rows
+
+# Create a dataframe for each slope's power analysis results based on the provided data
+power_data_interaction <- data.frame(
+  sample_size = c(10, 20, 30, 40, 60, 70, # pilot interaction-slope = 0.9037
+                  10, 20, 30, 40, 60, 70, 80, 90, 100, # medium interaction-slope = 0.6037
+                  60, 100, 130, 150, 170, 200), # small interaction-slope = 0.4037
+  power = c(37.0, 59.0, 81.0, 89.0, 96.0, 98.0,  # pilot slope
+            13.0, 25.0, 32.0, 45.0, 69.0, 79.0, 81.0, 90.0, 91.0,  # medium slope
+            39.0, 62.0, 66.0, 75.0, 80.0, 86.0), # small slope
+  min = c(27.56, 48.71, 71.93, 81.17, 90.07, 92.96,  # pilot slope
+          7.11, 16.88, 23.02, 35.03, 58.97, 69.71, 71.93, 82.38, 83.60,  # medium slope
+          29.40, 51.75, 55.85, 65.34, 70.82, 77.63), # small slope
+  max = c(47.24, 68.74, 88.16, 94.38, 98.90, 99.76,  # pilot slope
+          21.20, 34.66, 42.08, 55.27, 77.87, 86.51, 88.16, 95.10, 95.80,  # medium slope
+          49.27, 71.52, 75.18, 83.12, 87.33, 92.13), # small slope
+  slope = c(rep("Pilot (Slope = 0.9037)", 6), 
+                 rep("Medium (Slope = 0.6037)", 9), 
+                 rep("Small (Slope = 0.4037)", 6))
+)
+
+power_data_interaction$slope = factor(power_data_interaction$slope, levels = c("Small (Slope = 0.4037)", "Medium (Slope = 0.6037)", "Pilot (Slope = 0.9037)"))
+
+
+palette <- brewer.pal(n = length(unique(power_data_interaction$slope)), name = "Set2")
+power_data_interaction$slope = as.factor(power_data_interaction$slope)
+power_plot_interaction = ggplot(data = power_data_interaction, aes(sample_size, power, ymin = min, ymax = max, color =  slope, group =  slope))+
+  geom_pointrange(position = position_dodge2(0.2), size = .8)+
+  scale_x_continuous(breaks = c(10,20,30,40,50,60,70,90,120,150,180,200))+
+  scale_y_continuous(breaks = c(25,50,65, 80, 100))+
+  geom_line(position = position_dodge2(0.3), color = "red", alpha = 0.6, linetype = 1, size = 1)+
+  geom_hline(yintercept = 80, color = "red", linetype = 2)+
+  labs(x = "Sample Size",y = "Power (%)", title = "Power estimates - subject random intercepts model", color = "Interaction Slope (effect size)")+
+  # Customize labels and title
+  labs(x = "Sample Size", y = "Power (%)", 
+       title = "Power Estimates - Interaction model with subject random intercepts",
+       color = "Interaction Slope (Log-odds scale)") +
+         scale_color_brewer(palette = "Set2") +
+   theme(
+    text = element_text(family = "serif"),  # Set font to serif
+    plot.title = element_text(hjust = 0.5, size = 16, face = "bold"),  # Center title and make it bold
+    axis.title.x = element_text(size = 14, face = "italic"),  # Italicize and resize axis labels
+    axis.title.y = element_text(size = 14, face = "italic"),
+    axis.text = element_text(size = 12),  # Resize axis text for better readability
+    legend.position = "top",  # Move legend to the top
+    legend.text = element_text(size = 12),  # Resize legend text
+    legend.title = element_text(size = 14, face = "bold")  # Bold legend title
+  )+
+  theme_bw()
+
+  ggsave("power_plot_interaction.png",plot = power_plot_interaction, width = 8, height = 6)
