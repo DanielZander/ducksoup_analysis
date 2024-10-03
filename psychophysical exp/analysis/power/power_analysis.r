@@ -12,6 +12,7 @@ library(lsr)
 library(epitools)
 library(ggdark)
 
+
 # ---------------------------------------------------------------------------#
 # ---------------------------------------------------------------------------#
 #          Looking at pilot 3 raw data to get an idea of effect sizes
@@ -44,6 +45,7 @@ summary(model)
 #(Intercept)           -0.3085     0.3912  -0.788    0.430
 #manipulationdominant   0.7322     0.4664   1.570    0.116
 
+plogis(-0.3085+0.7322) - plogis(-0.3085)
 
 vcov_random <- VarCorr(model)
 vcov_category <- vcov_random$player
