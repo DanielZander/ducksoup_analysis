@@ -78,6 +78,14 @@ high_conf_dom = plogis(-1.4903 + 2.4587 + 0.6608)
 high_conf_dom-high_conf_sub
 #Increase due to dom manip = 0.1112595. 
 
+conflict_trials$conf_diff_1_centered <- scale(conflict_trials$conf_diff_1)
+model_3 = glm(group_follows_individual ~ manipulation * conf_diff_1_centered,
+             data = conflict_trials, family = "binomial")
+summary(model_3)
+plot_model( model_3, type = "pred")
+plot_model( model_3, type = "slope") #odds scale. 
+plot_model( df_sim, type = "re",transform = NULL)
+
 # ---------------------------------------------------------------------------#
 # ---------------------------------------------------------------------------#
 #                   Create df for conflict trials
